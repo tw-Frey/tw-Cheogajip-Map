@@ -107,7 +107,7 @@
             // Create markers.
             markLogoPin: new google.maps.Marker({...markLogoPinStyle, ...storeInfo})
           }
-          ( marker => {
+          (function(marker){
             marker.setAnimation(google.maps.Animation.DROP);
             marker.addListener("click", function(){
               if(marker.getAnimation() !== null) {
