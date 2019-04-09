@@ -43,8 +43,7 @@
       }
       // 樣式: Mark Logo Pin
       const markLogoPinStyle = {
-        icon: "cheogajip-pin.png",
-        animation: google.maps.Animation.DROP
+        icon: "cheogajip-pin.png"
       }
       // 定義 storeDetail, storeMap, map
       var storeDetail, storeMap, map;
@@ -100,14 +99,15 @@
             center: store.center,
             position: store.center
           }
-          return (stores.push(
+          stores[storeName] = {
             // Add the circle for this store to the map. (1500m)
-            new google.maps.Circle({...outerCircleStyle, ...storeInfo}),
+            outerCircle: new google.maps.Circle({...outerCircleStyle, ...storeInfo}),
             // Add the circle for this store to the map. (750m)
-            new google.maps.Circle({...innerCircleStyle, ...storeInfo}),
+            innerCircle: new google.maps.Circle({...innerCircleStyle, ...storeInfo}),
             // Create markers.
-            new google.maps.Marker({...markLogoPinStyle, ...storeInfo})
-          ), stores)
+            markLogoPin: new google.maps.Marker({...markLogoPinStyle, ...storeInfo, animation: google.maps.Animation.DROP})
+          }
+          return stores;
         }, [])
       }
     </script>
