@@ -8,7 +8,7 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        /*height: 425px;*/
+        height: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -61,19 +61,27 @@
           mapTypeId: 'terrain'
         });
         // Construct the circle for each value in storeMap.
-        for (var store in storeMap) {
+        Object.keys(storeMap).forEach(storeName => {
+          let store = storeMap[storeName]
           // Add the circle for this store to the map.
-          var storeCircle = new google.maps.Circle({
+          let storeCircle = new google.maps.Circle({
             strokeColor: '#FF0000',
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: '#FF0000',
             fillOpacity: 0.35,
             map: map,
-            center: storeMap[store].center,
+            center: store.center,
             radius: 750
           });
-        }
+          // Create markers.
+          let marker = new google.maps.Marker({
+            position: store.center,
+            //icon: icons[features[i].type].icon,
+            title: storeName,
+            map: map
+          });
+        })
       }
     </script>
     <script async defer
