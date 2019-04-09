@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>    
+  <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="shortcut icon" href="favicon.ico"/>
@@ -22,12 +22,38 @@
   </head>
   <body>
     <div id="map"></div>
-    <script>      
-      // 定義 storeMap, map
-      var storeMap, map;
+    <script>
+      // 樣式: 1500m 外圈
+      const outerCircleStyle = {
+        strokeColor: '#ccff99',
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: '#ccff99',
+        fillOpacity: 0.2,
+        radius: 1500
+      }
+      // 樣式: 750m 內圈
+      const innerCircleStyle = {
+        strokeColor: '#ff0000',
+        strokeOpacity: 0.2,
+        strokeWeight: 1,
+        fillColor: '#ff0000',
+        fillOpacity: 0.2,
+        radius: 750
+      }
+      // 樣式: Mark Logo Pin
+      const markLogoPinStyle = {
+        icon: "cheogajip-pin.png",
+        animation: google.maps.Animation.DROP
+      }
+      // 定義 storeDetail, storeMap, map
+      var storeDetail, storeMap, map;
       function initMap() {
         // First, create an object containing LatLng and population for each store.
         storeMap = {
+          /*
+            外送外帶店
+          */
           延吉店: {
             center: new google.maps.LatLng(25.042321,121.554319)
           },
@@ -46,6 +72,9 @@
           新莊棒球場店: {
             center: new google.maps.LatLng(25.039165,121.447302)
           },
+          /*
+            內用外帶店
+          */
           光復店: {
             center: new google.maps.LatLng(25.039471,121.556392)
           },
@@ -58,43 +87,28 @@
         };
         // Create the map.
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
-          center: {lat: 25.0372524, lng: 121.5311568},
+          center: new google.maps.LatLng(25.0372524,121.5311568),
           mapTypeId: 'terrain'
+          zoom: 13          
         });
-        // Construct the circle for each value in storeMap.
-        Object.keys(storeMap).forEach(storeName => {
+        // Construct the circles and mark for each key/value in storeMap.
+        storeDetail = Object.keys(storeMap).reduceRight((stores, storeName) => {
           let store = storeMap[storeName]
-          // Add the circle for this store to the map. (1500m)
-          new google.maps.Circle({
-            strokeColor: '#ccff99',
-            strokeOpacity: 0.5,
-            strokeWeight: 1,
-            fillColor: '#ccff99',
-            fillOpacity: 0.3,
+          let storeInfo = {
             map: map,
-            center: store.center,
-            radius: 1500
-          });
-          // Add the circle for this store to the map. (750m)
-          new google.maps.Circle({
-            strokeColor: '#ff0000',
-            strokeOpacity: 0.5,
-            strokeWeight: 1,
-            fillColor: '#ff0000',
-            fillOpacity: 0.3,
-            map: map,
-            center: store.center,
-            radius: 750
-          });
-          // Create markers.
-          new google.maps.Marker({
-            position: store.center,
-            icon: "cheogajip-pin.png",
             title: storeName,
-            map: map
-          });
-        })
+            center: store.center,
+            position: store.center
+          }
+          return (stores.push(
+            // Add the circle for this store to the map. (1500m)
+            new google.maps.Circle({...outerCircleStyle, ...storeInfo}),
+            // Add the circle for this store to the map. (750m)
+            new google.maps.Circle({...innerCircleStyle, ...storeInfo}),
+            // Create markers.
+            new google.maps.Marker({...markLogoPinStyle, ...storeInfo})
+          ), stores)
+        }, [])
       }
     </script>
     <script async defer
