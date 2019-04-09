@@ -107,16 +107,15 @@
             // Create markers.
             markLogoPin: new google.maps.Marker({...markLogoPinStyle, ...storeInfo})
           }
-          (function(marker){
-            marker.setAnimation(google.maps.Animation.DROP);
-            marker.addListener("click", function(){
-              if(marker.getAnimation() !== null) {
-                 marker.setAnimation(null);
-              } else {
-                 marker.setAnimation(google.maps.Animation.BOUNCE);
-              }
-            })
-          })(stores[storeName].markLogoPin)
+          let marker = stores[storeName].markLogoPin
+          marker.setAnimation(google.maps.Animation.DROP);
+          marker.addListener("click", function(){
+            if(marker.getAnimation() !== null) {
+               marker.setAnimation(null);
+            } else {
+               marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+          })
           return stores;
         }, [])
       }
