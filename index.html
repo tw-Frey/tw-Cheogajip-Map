@@ -26,6 +26,21 @@
         延吉店: {
           center: {lat: 25.0423209, lng: 121.5521254} //25.0423209,121.5521254
         },
+        行天宮店: {
+          center: {lat: 25.0137539, lng: 121.521621} //25.0137539,121.521621
+        },
+        北安店: {
+          center: {lat: 25.0468756, lng: 121.5216209} //25.0468756,121.5216209
+        },
+        永和中正店: {
+          center: {lat: 25.0468674, lng: 121.5214492} //25.0468674,121.5214492
+        },
+        三重三和店: {
+          center: {lat: 24.9944464, lng: 121.458192} //24.9944464,121.458192
+        },
+        新莊棒球場店: {
+          center: {lat: 24.9944136, lng: 121.4578486} //24.9944136,121.4578486
+        },
         光復店: {
           center: {lat: 25.0395144, lng: 121.5542435} //25.0395144,121.5542435
         },
@@ -36,13 +51,15 @@
           center: {lat: 25.0097668, lng: 121.4600481} //25.0097668,121.4600481
         }
       };
-      // Create the map.
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: {lat: 25.0372524, lng: 121.5311568},
-        mapTypeId: 'terrain'
-      });
+      // 定義 map
+      var map;
       function initMap() {
+        // Create the map.
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: {lat: 25.0372524, lng: 121.5311568},
+          mapTypeId: 'terrain'
+        });
         // Construct the circle for each value in storeMap.
         for (var store in storeMap) {
           // Add the circle for this store to the map.
