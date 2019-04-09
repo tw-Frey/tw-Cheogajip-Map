@@ -20,40 +20,40 @@
   </head>
   <body>
     <div id="map"></div>
-    <script>
-      // First, create an object containing LatLng and population for each store.
-      var storeMap = {
-        延吉店: {
-          center: {lat: 25.0423209, lng: 121.5521254} //25.0423209,121.5521254
-        },
-        行天宮店: {
-          center: {lat: 25.0137539, lng: 121.521621} //25.0137539,121.521621
-        },
-        北安店: {
-          center: {lat: 25.0468756, lng: 121.5216209} //25.0468756,121.5216209
-        },
-        永和中正店: {
-          center: {lat: 25.0468674, lng: 121.5214492} //25.0468674,121.5214492
-        },
-        三重三和店: {
-          center: {lat: 24.9944464, lng: 121.458192} //24.9944464,121.458192
-        },
-        新莊棒球場店: {
-          center: {lat: 24.9944136, lng: 121.4578486} //24.9944136,121.4578486
-        },
-        光復店: {
-          center: {lat: 25.0395144, lng: 121.5542435} //25.0395144,121.5542435
-        },
-        小巨蛋店: {
-          center: {lat: 25.0451536, lng: 121.5487756} //25.0451536,121.5487756
-        },
-        板橋民族店: {
-          center: {lat: 25.0097668, lng: 121.4600481} //25.0097668,121.4600481
-        }
-      };
-      // 定義 map
-      var map;
+    <script>      
+      // 定義 storeMap, map
+      var storeMap, map;
       function initMap() {
+        // First, create an object containing LatLng and population for each store.
+        storeMap = {
+          延吉店: {
+            center: new google.maps.LatLng(25.042321,121.554319)
+          },
+          行天宮店: {
+            center: new google.maps.LatLng(25.062341,121.532573)
+          },
+          北安店: {
+            center: new google.maps.LatLng(25.081521,121.548497)
+          },
+          永和中正店: {
+            center: new google.maps.LatLng(24.994607,121.513436)
+          },
+          三重三和店: {
+            center: new google.maps.LatLng(25.070962,121.495816)
+          },
+          新莊棒球場店: {
+            center: new google.maps.LatLng(25.039165,121.447302)
+          },
+          光復店: {
+            center: new google.maps.LatLng(25.039471,121.556392)
+          },
+          小巨蛋店: {
+            center: new google.maps.LatLng(25.050793,121.54989)
+          },
+          板橋民族店: {
+            center: new google.maps.LatLng(25.009767,121.462242)
+          }
+        };
         // Create the map.
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 13,
