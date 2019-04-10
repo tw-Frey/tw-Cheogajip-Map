@@ -54,34 +54,43 @@
             外送外帶店
           */
           延吉店: {
-            center: new google.maps.LatLng(25.042321,121.554319)
+            center: new google.maps.LatLng(25.042321,121.554319),
+            visibleCircle: true
           },
           行天宮店: {
-            center: new google.maps.LatLng(25.062341,121.532573)
+            center: new google.maps.LatLng(25.062341,121.532573),
+            visibleCircle: true
           },
           北安店: {
-            center: new google.maps.LatLng(25.081521,121.548497)
+            center: new google.maps.LatLng(25.081521,121.548497),
+            visibleCircle: true
           },
           永和中正店: {
-            center: new google.maps.LatLng(24.994607,121.513436)
+            center: new google.maps.LatLng(24.994607,121.513436),
+            visibleCircle: true
           },
           三重三和店: {
-            center: new google.maps.LatLng(25.070962,121.495816)
+            center: new google.maps.LatLng(25.070962,121.495816),
+            visibleCircle: true
           },
           新莊棒球場店: {
-            center: new google.maps.LatLng(25.039165,121.447302)
+            center: new google.maps.LatLng(25.039165,121.447302),
+            visibleCircle: true
           },
           /*
             內用外帶店
           */
           光復店: {
-            center: new google.maps.LatLng(25.039471,121.556392)
+            center: new google.maps.LatLng(25.039471,121.556392),
+            visibleCircle: true
           },
           小巨蛋店: {
-            center: new google.maps.LatLng(25.050793,121.54989)
+            center: new google.maps.LatLng(25.050793,121.54989),
+            visibleCircle: true
           },
           板橋民族店: {
-            center: new google.maps.LatLng(25.009767,121.462242)
+            center: new google.maps.LatLng(25.009767,121.462242),
+            visibleCircle: false
           }
         };
         // Create the map.
@@ -101,11 +110,11 @@
           }
           stores[storeName] = {
             // Add the circle for this store to the map. (1500m)
-            outerCircle: new google.maps.Circle({...outerCircleStyle, ...storeInfo}),
+            outerCircle: new google.maps.Circle({...outerCircleStyle, ...storeInfo, visible:store.visibleCircle}),
             // Add the circle for this store to the map. (750m)
-            innerCircle: new google.maps.Circle({...innerCircleStyle, ...storeInfo}),
+            innerCircle: new google.maps.Circle({...innerCircleStyle, ...storeInfo, visible:store.visibleCircle}),
             // Create markers.
-            markLogoPin: new google.maps.Marker({...markLogoPinStyle, ...storeInfo})
+            markLogoPin: new google.maps.Marker({...markLogoPinStyle, ...storeInfo, visible:true})
           }
           let marker = stores[storeName].markLogoPin
           marker.setAnimation(google.maps.Animation.DROP);
