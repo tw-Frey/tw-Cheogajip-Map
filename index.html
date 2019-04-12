@@ -51,10 +51,18 @@
         // First, create an object containing LatLng and population for each store.
         storeMap = {
           /*
-            新增預定店位置 (前身:江子翠艋舺燒酒薑母鴨 = 25.027477, 121.476068)
+            預定店位置 (前身:江子翠艋舺燒酒薑母鴨 = 25.027477, 121.476068)
           */
-          David周: {
+          David_1: {
             center: new google.maps.LatLng(25.027477, 121.476068),
+            visibleCircle: true,
+            icon: "cheogajip-chou.png"
+          },
+		  /*
+            預定店位置 (前身:手機行超越康寧店 = 25.068219, 121.612205)
+          */
+          David_2: {
+            center: new google.maps.LatLng(25.068219, 121.612205),
             visibleCircle: true,
             icon: "cheogajip-chou.png"
           },
@@ -63,32 +71,32 @@
           */
           延吉店: {
             center: new google.maps.LatLng(25.042321,121.554319),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           行天宮店: {
             center: new google.maps.LatLng(25.062341,121.532573),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           北安店: {
             center: new google.maps.LatLng(25.081521,121.548497),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           永和中正店: {
             center: new google.maps.LatLng(24.994607,121.513436),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           三重三和店: {
             center: new google.maps.LatLng(25.070962,121.495816),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           新莊棒球場店: {
             center: new google.maps.LatLng(25.039165,121.447302),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           /*
@@ -96,12 +104,12 @@
           */
           光復店: {
             center: new google.maps.LatLng(25.039471,121.556392),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           小巨蛋店: {
             center: new google.maps.LatLng(25.050793,121.54989),
-            visibleCircle: true,
+            visibleCircle: false,
             icon: "cheogajip-pin.png"
           },
           板橋民族店: {
@@ -126,22 +134,28 @@
             center: store.center,
             position: store.center
           }
-          stores[storeName] = {
-            // Add the circle for this store to the map. (1500m)
-            outerCircle: new google.maps.Circle({...outerCircleStyle, ...storeInfo, visible:store.visibleCircle}),
-            // Add the circle for this store to the map. (750m)
-            innerCircle: new google.maps.Circle({...innerCircleStyle, ...storeInfo, visible:store.visibleCircle}),
-            // Create markers.
-            markLogoPin: new google.maps.Marker({...markLogoPinStyle, ...storeInfo, visible:true})
-          }
-          let marker = stores[storeName].markLogoPin
-          marker.addListener("click", function(){
-            if(marker.getAnimation() !== null) {
-               marker.setAnimation(null);
+		  let outerCircle = new google.maps.Circle({...outerCircleStyle, ...storeInfo, visible:store.visibleCircle});
+		  let innerCircle = new google.maps.Circle({...innerCircleStyle, ...storeInfo, visible:store.visibleCircle});
+		  let markLogoPin = new google.maps.Marker({...markLogoPinStyle, ...storeInfo, visible:true});
+          markLogoPin.addListener("click", function(){
+            if(markLogoPin.getAnimation() !== null) {
+               markLogoPin.setAnimation(null);
+			   innerCircle.setVisible(store.visibleCircle);
+			   outerCircle.setVisible(store.visibleCircle);
             } else {
-               marker.setAnimation(google.maps.Animation.BOUNCE);
+               markLogoPin.setAnimation(google.maps.Animation.BOUNCE);
+			   innerCircle.setVisible(true);
+			   outerCircle.setVisible(true);
             }
           })
+          stores[storeName] = {
+            // Add the circle for this store to the map. (1500m)
+            outerCircle: outerCircle,
+            // Add the circle for this store to the map. (750m)
+            innerCircle: innerCircle,
+            // Create markers.
+            markLogoPin: markLogoPin
+          }
           return stores;
         }, [])
       }
