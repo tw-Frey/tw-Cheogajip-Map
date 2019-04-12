@@ -144,8 +144,8 @@
 			   outerCircle.setVisible(store.visibleCircle);
             } else {
                markLogoPin.setAnimation(google.maps.Animation.BOUNCE);
-			   innerCircle.setVisible(true);
-			   outerCircle.setVisible(true);
+			   innerCircle.setVisible(!store.visibleCircle);
+			   outerCircle.setVisible(!store.visibleCircle);
             }
           })
           stores[storeName] = {
