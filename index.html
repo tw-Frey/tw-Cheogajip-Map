@@ -18,11 +18,42 @@
         margin: 0;
         padding: 0;
       }
+      form {
+        position: absolute;
+        width: 100%;
+      }
+      form>input {
+        float: left;
+        box-sizing: border-box;
+      }
+      input[type=text] {
+        width: calc(100% - 150px);
+      }
+      input[type=submit] {
+        width: 150px
+      }
     </style>
   </head>
   <body>
+    <form method=GET>
+        <input type=text name=key>
+        <input type=hidden name=timestamp>
+        <input type=hidden name=callback value=initMap>
+        <input type="submit" value="Google Map API 金鑰">
+    </form>
     <div id="map"></div>
     <script>
+      const api_key = (location.search.match(/key=(\w*)/) || [,null])[1]
+      const timestamp = (location.search.match(/timestamp=(\d*)/) || [,null])[1]
+      if (api_key && Date.now() - timestamp < 60000) {
+        let map_js = document.createElement("script");
+        map_js.async = map_js.defer = true;
+        map_js.src = "https://maps.googleapis.com/maps/api/js" + location.search;
+        document.body.appendChild(map_js);
+      } else {
+        document.getElementsByTagName("input")[0].value = api_key;
+        document.getElementsByTagName("input")[1].value = Date.now();
+      }
       // 樣式: 1500m 外圈
       const outerCircleStyle = {
         strokeColor: '#ccff99',
@@ -58,7 +89,7 @@
             visibleCircle: true,
             icon: "cheogajip-chou.png"
           },
-		  /*
+          /*
             預定店位置 (前身:手機行超越康寧店 = 25.068219, 121.612205)
           */
           David_2: {
@@ -134,18 +165,18 @@
             center: store.center,
             position: store.center
           }
-		  let outerCircle = new google.maps.Circle({...outerCircleStyle, ...storeInfo, visible:store.visibleCircle});
-		  let innerCircle = new google.maps.Circle({...innerCircleStyle, ...storeInfo, visible:store.visibleCircle});
-		  let markLogoPin = new google.maps.Marker({...markLogoPinStyle, ...storeInfo, visible:true});
+          let outerCircle = new google.maps.Circle({...outerCircleStyle, ...storeInfo, visible:store.visibleCircle});
+          let innerCircle = new google.maps.Circle({...innerCircleStyle, ...storeInfo, visible:store.visibleCircle});
+          let markLogoPin = new google.maps.Marker({...markLogoPinStyle, ...storeInfo, visible:true});
           markLogoPin.addListener("click", function(){
             if(markLogoPin.getAnimation() !== null) {
                markLogoPin.setAnimation(null);
-			   innerCircle.setVisible(store.visibleCircle);
-			   outerCircle.setVisible(store.visibleCircle);
+               innerCircle.setVisible(store.visibleCircle);
+               outerCircle.setVisible(store.visibleCircle);
             } else {
                markLogoPin.setAnimation(google.maps.Animation.BOUNCE);
-			   innerCircle.setVisible(!store.visibleCircle);
-			   outerCircle.setVisible(!store.visibleCircle);
+               innerCircle.setVisible(!store.visibleCircle);
+               outerCircle.setVisible(!store.visibleCircle);
             }
           })
           stores[storeName] = {
@@ -159,9 +190,6 @@
           return stores;
         }, [])
       }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDdUVZR0kwTlIl8OJuMGXpvy0mVeQlm0c&callback=initMap">
-    </script>
+    </script>   
   </body>
 </html>
